@@ -59,6 +59,7 @@ def recommend_by_userid(userid):
     for i, movie in enumerate(known):
         known_movies.append(movie_indices[movie_ids.index(movie)])
     # predicting the scores
+    print('Predicting the scores')
     scores = model.predict(user_index, np.arange(n_items))
 
     # ranking them in non increasing order
