@@ -25,7 +25,7 @@ model = LightFM(loss='warp')
 # train lightFM model using fit method
 model.fit(ratings, epochs=30, num_threads=2)
 
-def Recomender(model, data, userid):
+def Recomender(model, ratings, userid):
     # number of movies and users in our dataset
     n_users, n_items = ratings.shape
 
