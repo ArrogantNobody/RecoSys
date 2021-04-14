@@ -15,11 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from RecoFramework import loginController
+from RecoFramework import loginController, newuser_form
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', loginController.login_map),
     path('session_test/', loginController.login_success),
     path('login/', loginController.ccid_verify),
+    path('popup/', newuser_form.pop),
+    path('data_update/', newuser_form.form_process)
+
+
 ]
