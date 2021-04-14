@@ -74,11 +74,11 @@ def recommend_by_userid(userid):
     for x in recommended_movies[:10]:
         print("%s" % x)
 
-    return top[:10]
+    return recommended_movies[:10]
 
 def evaluation():
     print("Starting evaluation our model...")
 
 if __name__ == '__main__':
     # predicting top 10 movies for the user 23
-    movies = recommend_by_userid(23)
+    recommended_movies = recommend_by_userid(23)
