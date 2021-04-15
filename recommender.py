@@ -6,6 +6,11 @@ from lightfm.evaluation import precision_at_k
 from lightfm.evaluation import auc_score
 from lightfm.cross_validation import random_train_test_split
 
+def dict_factory(cursor, row):
+    d = {}
+    d[row[0]] = row[1:]
+    return d
+
 def fetch_data():
     # Create a SQL connection to our SQLite database
     con = sqlite3.connect("db.sqlite3")
@@ -38,7 +43,7 @@ def fetch_data():
 
     # train lightFM model using fit method
     print("Starting training the model...")
-    model.fit_partial(train, epochs=30, num_threads=2)
+    model.fit(train, epochs=30, num_threads=2)
 
     user_dict = dataset._user_id_mapping
     movie_dict = dataset._item_id_mapping
@@ -80,9 +85,21 @@ def recommend_by_userid(userid):
     for x in recommended_movies[:10]:
         print("%s" % x)
 
+    con = sqlite3.connect("db.sqlite3")
+    con.row_factory = dict_factory
+    cur = con.cursor()
+    result = []
+
+    for mid in recommended_movies[:10]:
+        cur.execute("SELECT * FROM RecoFramework_movies WHERE movieId=?", (mid, ))
+        r = cur.fetchone()
+        result.append(r)
+
+    con.close()
+
     evaluation(model, train, test)
 
-    return recommended_movies[:10]
+    return result
 
 def evaluation(model, train, test):
     print("\nStarting evaluation our model...")
