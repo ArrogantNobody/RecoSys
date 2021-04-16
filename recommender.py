@@ -5,6 +5,7 @@ import sqlite3
 from lightfm.evaluation import precision_at_k
 from lightfm.evaluation import auc_score
 from lightfm.cross_validation import random_train_test_split
+from lightfm.datasets import fetch_movielens
 
 def dict_factory(cursor, row):
     d = {}
@@ -29,15 +30,19 @@ def fetch_data():
     for row in cur.execute('SELECT userId, movieId, rating FROM RecoFramework_ratings WHERE rating = 5;'):
         data.append(row)
 
-    dataset = Dataset()
-    print("Loading dataset...")
-    dataset.fit(users, movies)
-    interactions, ratings = dataset.build_interactions(data)
-
     # Be sure to close the connection
     con.close()
 
-    train, test = random_train_test_split(interactions)
+    dataset = Dataset()
+    print("Loading dataset...")
+
+    dataset.fit(users, movies)
+    interactions, ratings = dataset.build_interactions(data)
+
+    train = interactions.tocsr()[:, :1682]
+    # train, test = random_train_test_split(interactions)
+
+    test = fetch_movielens()['test']
 
     model = LightFM(loss='warp')
 
