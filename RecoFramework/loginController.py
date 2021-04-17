@@ -105,8 +105,6 @@ def recommend_by_userid(userid):
 
     con.close()
 
-    #evaluation(model, train, test)
-
     return result
 
 def mvid_l(recommended_movies):
