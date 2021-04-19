@@ -1,7 +1,9 @@
-from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.views.decorators.csrf import csrf_exempt
-#from django.db import models
+from django.http import HttpResponse
+from django.contrib.sessions.models import Session
+from RecoFramework.models import UserInfo,Ratings
+import sqlite3
 import numpy as np
 from lightfm import LightFM
 from lightfm.data import Dataset
@@ -9,11 +11,8 @@ import sqlite3
 from lightfm.evaluation import precision_at_k
 from lightfm.evaluation import auc_score
 from lightfm.cross_validation import random_train_test_split
-from RecoFramework.models import UserInfo
 import imdb
 import json
-
-
 def dict_factory(cursor, row):
     d = {}
     d[row[0]] = row[1:]
@@ -105,6 +104,8 @@ def recommend_by_userid(userid):
 
     con.close()
 
+    #evaluation(model, train, test)
+
     return result
 
 def mvid_l(recommended_movies):
@@ -126,49 +127,69 @@ def get_ImgURL_from_ID_lst(id_lst):
 
 
 
+def rated_movie_list():
+    con = sqlite3.connect("db.sqlite3")
+    cur = con.cursor()
+    rating = []
+
+    rated = list(cur.execute('SELECT movieId, rating FROM RecoFramework_ratings where userId = 1'))
+    rated_mv = [a[0] for a in rated]
+    return rated_mv
+
+def update_data(rate_value, userid, i):
+    con = sqlite3.connect("db.sqlite3")
+    cur = con.cursor()
+    cur.execute('update RecoFramework_ratings set rating = %d where userId = %d and movieId = %d' % (rate_value, userid, i))
+    #cur.execute('update RecoFramework_ratings set rating = 5 where userId = 1 and movieId = 1')
+    con.commit()
+
+def insert_data(userid, i, rate_value):
+    con = sqlite3.connect("db.sqlite3")
+    cur = con.cursor()
+    cur.execute('insert into RecoFramework_ratings(userId, movieId, rating) VALUES (%d, %d, %d)'% (userid, i, rate_value))
+    con.commit()
 
 
-def login_map(request):
-    return render(request, 'adminPage.html')
-
-def login_success(request):
-    return render(request, 'sessionTest.html')
-
+def pop(request):
+    return render(request, 'newuser_form.html')
 
 @csrf_exempt
-def ccid_verify(request):
-    # try:
-    #     UserInfo.objects.create(username='BQ', password='456', age=27)
-    #     print('successful')
-    # except:
-    #     print('failed')
-    # try:
-    #     for i in range(941):
-    #         UserInfo.objects.create(username='admin', password='123', age=18)
-    #     print('successful')
-    # except:
-    #     print('failed')
-    user_list_obj = UserInfo.objects.values()
-    ccid_list = []
-    for item in user_list_obj:
-        username = item['username']
-        ccid_list.append(username)
-    #print(ccid_list)
-
+def form_process(request):
     if request.method == "POST":
-        username = request.POST['username']
-        userid = UserInfo.objects.filter(username=username)
-        if username in ccid_list:
-            request.session['userid'] = userid # also cookie
-            userid = userid.values()[0]['id']
-            print(userid)
-            movieids = recommend_by_userid(userid)
-            mvidList = mvid_l(movieids)
-            print(movieids)
-            url_lis = json.dumps(get_ImgURL_from_ID_lst(mvidList))
+        mv_list = ["mv1", "mv2", "mv3", "mv4", "mv5", "mv6", "mv7", "mv8", "mv9", "mv10"]
+        mv_value = {}
+        for item in mv_list:
+            mv_value[item] = request.POST[item]
+        #print(mv_value)
+        userid = request.session.get('userid')
+        userid = userid.values()[0]['id']
+        print(userid)
+        ratedmv = rated_movie_list()
+        #print(ratedmv)
+        for i in range(1,11):
+            rate_value = int(mv_value[mv_list[i - 1]])
+            #print(rate_value)
+            if i in ratedmv:#the movie is in that database, we need to update
+                #update_data(rate_value, userid, i)
+                try:
+                    update_data(rate_value, userid, i)
+                    # Ratings.objects.filter(userId=userid, movieId=i).update(rating=rate_value)
+                except:
+                    print('update failed')
 
-            #url_lis = json.dumps([(1,'bs'),(3,'shit'),(5,'fuck'),(7,'basu'),(9,'ma4')])
-            return render(request, '802project.html', {'urllist': url_lis})
-        else:
-            return render(request, 'adminPage.html',{'script': "alert", 'wrong': 'You have input wrong ccid, please re-input'})
+            else:#the movie is not in database, we need to create
+                try:
+                    insert_data(userid, i, rate_value)
+                    #cur.execute('insert into RecoFramework_ratings(userId, movieId, rating) VALUES (%d, %d, %d)'% (userid, i, rate_value))
+                    # Ratings.objects.create(userId=userid, movieId=i, rating=rate_value)
+                except:
+                    print('insert failed')
+        movieids = recommend_by_userid(userid)
+        mvidList = mvid_l(movieids)
+        print(movieids)
+        url_lis = json.dumps(get_ImgURL_from_ID_lst(mvidList))
+
+        return render(request, '802project.html', {'urllist': url_lis})
+
+        
 
