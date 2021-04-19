@@ -26,74 +26,37 @@ $ pip install -r requirements.txt
 
 ## Dataset
 
-We created our own video matting dataset. The dataset includes four online conference style green screen videos. We extracted the data from video and generated ground truth mask for each character, and then we applied virtual background to the frames as our training/testing dataset. You can download the dataset from <a href="https://drive.google.com/file/d/1HGUDS7oaYbBAJHfsQJBhc-r-9kRhh2cs/view?usp=sharing" rel="dataset"> this link <a/>. The data examples are shown as below:
-
- Input image 1:![1](https://github.com/kuangzijian/Flow-Based-Video-Matting/blob/master/readme_imgs/with_bg.jpg) | Input image 2: ![2](https://github.com/kuangzijian/Flow-Based-Video-Matting/blob/master/readme_imgs/with_bg2.jpg)
-:-------------------------:|:-------------------------:
-Ground truth 1:![3](https://github.com/kuangzijian/Flow-Based-Video-Matting/blob/master/readme_imgs/ground_truth.jpg) | Ground truth 2:![4](https://github.com/kuangzijian/Flow-Based-Video-Matting/blob/master/readme_imgs/ground_truth2.jpg)
-
-To use our code to generate more video matting data and groudtruth, you can use the functions in _dataset_generator.py_
-
-
+The data sets were collected over various periods of time with different sizes of the set. For our application, the model is trained and evaluated with the latest small MovieLens dataset <a href="https://grouplens.org/datasets/movielens/latest/" rel="dataset"> 
+ 
 ## Configure and Run the Code
-Please follow the code below to start our website:
+1. Make sure you have the db.sqlite3 database file under the root folder
+2. Please follow the code below to start our website:
 
 ```python
 python manage.py runserver
 ```
 
-To train our model: 
- 1. Create folder structure like the example shows in the picture below, and then dump the training data into the _original_training_ folder, and dump the ground truth data into the _ground_truth_training_ folder:
- 
-  ![1](https://github.com/kuangzijian/Flow-Based-Video-Matting/blob/master/readme_imgs/dataset_structure.png)
-  
- 2. Run the training code:
-
-``` 
-python funet_train.py
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -e E, --epochs E      Number of epochs (default: 6)
-  -b [B], --batch-size [B]
-                        Batch size (default: 1)
-  -l [LR], --learning-rate [LR]
-                        Learning rate (default: 0.1)
-  -f LOAD, --load LOAD  Load model from a .pth file (default: False)
-  -s SCALE, --scale SCALE
-                        Downscaling factor of the images (default: 1)
-  -v VAL, --validation VAL
-                        Percent of the data that is used as validation (0-100)
-                        (default: 20.0)
-``` 
-To predict using our model:
+To evaluate our model:
  1. Dump the testing data into the _original_testing_ folder, and dump the ground truth data into the _ground_truth_testing_ folder.
  2. Run the predicting code:
 
 ``` 
 python funet_predict.py
-
-optional arguments:
-  -h, --help            show this help message and exit
-  --model FILE, -m FILE
-                        Specify the file in which the model is stored
-                        (default: MODEL.pth)
-  --input INPUT [INPUT ...], -i INPUT [INPUT ...]
-                        filenames of input images (default: None)
-  --output INPUT [INPUT ...], -o INPUT [INPUT ...]
-                        Filenames of ouput images (default: None)
-  --viz, -v             Visualize the images as they are processed (default:
-                        False)
-  --no-save, -n         Do not save the output masks (default: False)
-  --mask-threshold MASK_THRESHOLD, -t MASK_THRESHOLD
-                        Minimum probability value to consider a mask pixel
-                        white (default: 0.5)
-  --scale SCALE, -s SCALE
-                        Scale factor for the input images (default: 1)
 ``` 
 
+Out put results:
+Login page:
+<img src="https://github.com/ArrogantNobody/RecoSys/blob/master/readme_imgs/1.png" alt="Paper" width="100%">
+
+Movie recommendation page:
+<img src="https://github.com/ArrogantNobody/RecoSys/blob/master/readme_imgs/2.png" alt="Paper" width="100%">
+
+Movie rating page:
+<img src="https://github.com/ArrogantNobody/RecoSys/blob/master/readme_imgs/3.png" alt="Paper" width="100%">
+
+
 ## Credits
-We want to thank the work of the [pythorch-pwc](https://github.com/sniklaus/pytorch-pwc) that implemented by sniklaus, we have used the pytorch-pwc to estimate optical flow in our project.
+We want to thank the work of the [lightfm] that implemented by maciejkula, we have used the lightfm as part of our recommendation model in our project.
 
 ## Citation
 ```
