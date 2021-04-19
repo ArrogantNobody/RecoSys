@@ -36,7 +36,7 @@ The data sets were collected over various periods of time with different sizes o
 python manage.py runserver
 ```
 
-Evaluation of the model:
+## Evaluation of the model:
 
 The accuray of a trained model is evaluated based on the metrics of precision@k and ROC AUC. 
 
@@ -49,6 +49,7 @@ python recommender.py
 ``` 
 
 Out put results:
+
 Login page:
 <img src="https://github.com/ArrogantNobody/RecoSys/blob/master/readme_imgs/1.png" alt="Paper" width="100%">
 
