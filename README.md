@@ -6,9 +6,10 @@ Please follow the code below to start our website.
 python manage.py runserver
 ```
 
-contribution of our project:
+Contributors of this project:
+Zihao Wang, Hang Zhu, Zijian Kuang, Xinran Tie.
 
 
 
-![image-20210418214735791](/Users/gingira/Library/Application Support/typora-user-images/image-20210418214735791.png)
+
 
