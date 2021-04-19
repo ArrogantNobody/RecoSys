@@ -36,12 +36,16 @@ The data sets were collected over various periods of time with different sizes o
 python manage.py runserver
 ```
 
-To evaluate our model:
- 1. Dump the testing data into the _original_testing_ folder, and dump the ground truth data into the _ground_truth_testing_ folder.
- 2. Run the predicting code:
+Evaluation of the model:
+
+The accuray of a trained model is evaluated based on the metrics of precision@k and ROC AUC. 
+
+For precision at k, we have set k = 10. We'll be look at whether the top 10 movie recommendation are relevant to the user.
+
+For AUC, we'll be calculating the probability that a randomly chosen positive sample will be ranked higher than a randomly chosen negative sample.
 
 ``` 
-python funet_predict.py
+python recommender.py
 ``` 
 
 Out put results:
