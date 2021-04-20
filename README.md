@@ -19,7 +19,7 @@ $ pip install -r requirements.txt
 
 ## Dataset
 
-The data sets were collected over various periods of time with different sizes of the set. For our application, the model is trained and evaluated with the latest small MovieLens dataset <a href="https://grouplens.org/datasets/movielens/latest/" rel="dataset"/> 
+The data sets were collected over various periods of time with different sizes of the set. For our application, the model is trained and evaluated with the latest small <a href="https://grouplens.org/datasets/movielens/latest/" rel="dataset"/> MovieLens dataset </a>
  
 ## Configure and Run the Code
 1. Make sure you have the db.sqlite3 database file under the root folder
