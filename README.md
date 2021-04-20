@@ -36,7 +36,19 @@ The data sets were collected over various periods of time with different sizes o
 python manage.py runserver
 ```
 
-Evaluation of the model:
+Out put results:
+
+Login page:
+<img src="https://github.com/ArrogantNobody/RecoSys/blob/master/readme_imgs/1.png" alt="Paper" width="100%">
+
+Movie recommendation page:
+<img src="https://github.com/ArrogantNobody/RecoSys/blob/master/readme_imgs/2.png" alt="Paper" width="100%">
+
+Movie rating page:
+<img src="https://github.com/ArrogantNobody/RecoSys/blob/master/readme_imgs/3.png" alt="Paper" width="100%">
+
+
+## Evaluation of the model:
 
 The accuray of a trained model is evaluated based on the metrics of precision@k and ROC AUC. 
 
@@ -47,17 +59,6 @@ For AUC, we'll be calculating the probability that a randomly chosen positive sa
 ``` 
 python recommender.py
 ``` 
-
-Out put results:
-Login page:
-<img src="https://github.com/ArrogantNobody/RecoSys/blob/master/readme_imgs/1.png" alt="Paper" width="100%">
-
-Movie recommendation page:
-<img src="https://github.com/ArrogantNobody/RecoSys/blob/master/readme_imgs/2.png" alt="Paper" width="100%">
-
-Movie rating page:
-<img src="https://github.com/ArrogantNobody/RecoSys/blob/master/readme_imgs/3.png" alt="Paper" width="100%">
-
 
 ## Credits
 We want to thank the work of the [lightfm] that implemented by maciejkula, we have used the lightfm as part of our recommendation model in our project.
