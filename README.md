@@ -17,24 +17,19 @@ Install packages with:
 $ pip install -r requirements.txt
 ```
 
-Or install with for Windows as per [PyTorch official site](https://pytorch.org/get-started/locally/):
-
-```
-$ pip install torch===1.6.0 torchvision===0.7.0 -f https://download.pytorch.org/whl/torch_stable.html
-$ pip install -r requirements.txt
-```
-
 ## Dataset
 
 The data sets were collected over various periods of time with different sizes of the set. For our application, the model is trained and evaluated with the latest small MovieLens dataset <a href="https://grouplens.org/datasets/movielens/latest/" rel="dataset"> 
  
 ## Configure and Run the Code
 1. Make sure you have the db.sqlite3 database file under the root folder
-2. Please follow the code below to start our website:
+2. Please follow the code below to start the server for our web application:
 
 ```python
 python manage.py runserver
 ```
+
+3. Then you can view our web application use any browers at http://127.0.0.1:8000/
 
 Out put results:
 
