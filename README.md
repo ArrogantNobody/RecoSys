@@ -58,7 +58,7 @@ python recommender.py
 ``` 
 
 ## Credits
-We want to thank the work of the [lightfm] that implemented by maciejkula, we have used the lightfm as part of our recommendation model in our project.
+We want to thank the work of the [lightfm](https://github.com/lyst/lightfm) that implemented by maciejkula, we have used the lightfm as part of our recommendation model in our project.
 
 ## Citation
 ```
