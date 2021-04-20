@@ -56,6 +56,8 @@ For precision at k, we have set k = 10. We'll be look at whether the top 10 movi
 
 For AUC, we'll be calculating the probability that a randomly chosen positive sample will be ranked higher than a randomly chosen negative sample.
 
+To run evaluation:
+
 ``` 
 python recommender.py
 ``` 
